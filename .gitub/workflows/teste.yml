@@ -1,0 +1,22 @@
+name: Test Pipe
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x,18.x]
+    steps:
+      - name: Checkout repository
+        uses: action/checkout@v3
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+      
+      - name: Install dependacies
+        run: npm install
+      
+      - name: Run the tests
+        run: npm test --covarage
